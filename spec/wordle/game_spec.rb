@@ -24,6 +24,16 @@ RSpec.describe Wordle::Game do
       it 'instantiates game object' do
         expect(described_class.new('crane')).to be_a(described_class)
       end
+
+      describe '#challenge' do
+        it 'returns challenge object' do
+          expect(described_class.new('crane').challenge).to be_a(Wordle::Challenge)
+        end
+
+        it 'challenge target is a Wordle::Word' do
+          expect(described_class.new('crane').challenge.target).to be_a(Wordle::Word)
+        end
+      end
     end
   end
 
@@ -32,7 +42,7 @@ RSpec.describe Wordle::Game do
       it 'returns true' do
         game = described_class.new(target)
 
-        expect(game.attempt(target)).to eq true
+        expect(game.guess(target)).to eq true
       end
     end
 
@@ -42,10 +52,10 @@ RSpec.describe Wordle::Game do
         wrong = 'pious'
 
         6.times do
-          expect(game.attempt(wrong)).to eq false
+          expect(game.guess(wrong)).to eq false
         end
 
-        expect { game.attempt(wrong) }.to raise_error(RuntimeError)
+        expect { game.guess(wrong) }.to raise_error(RuntimeError)
       end
     end
   end
@@ -66,7 +76,7 @@ RSpec.describe Wordle::Game do
     end
   end
 
-  describe '#help' do
+  describe '#keyboard' do
     let(:game) { described_class.new(target) }
     let(:keyboard) do
       [
@@ -80,24 +90,26 @@ RSpec.describe Wordle::Game do
       it 'returns keyboard layout with white on black keys' do
         expected_keyboard = keyboard.map { |row| row.map { |letter| white_on_black(letter) } }
 
-        expect(game.help).to eq(expected_keyboard)
+        expect(game.keyboard).to eq(expected_keyboard)
       end
     end
 
     context 'with some attempts' do
+      let(:word) { 'QUART' }
+
       it 'returns keyboard layout with black on white keys' do
-        word = 'QUART'
         expected_keyboard = keyboard.map do |row|
           row.map do |letter|
-            next black_on_white(letter) if word.include?(letter)
+            next white_on_black(letter) unless word.include?(letter)
+            next white_on_green(letter) if target.upcase.index(letter) == word.index(letter)
+            next white_on_yellow(letter) if target.upcase.chars.include?(letter)
 
-            white_on_black(letter)
+            white_on_red(letter)
           end
         end
 
-        game.attempt(word)
-
-        expect(game.help).to eq(expected_keyboard)
+        game.guess(word)
+        expect(game.keyboard).to eq(expected_keyboard)
       end
     end
   end
@@ -121,7 +133,7 @@ RSpec.describe Wordle::Game do
           white_on_red(char.upcase)
         end
 
-        game.attempt(word)
+        game.guess(word)
 
         expect(game.feedback).to eq([expected_keyboard])
       end
@@ -139,8 +151,8 @@ RSpec.describe Wordle::Game do
 
     context 'when some attempts done' do
       it 'returns challenge in progress' do
-        game.attempt('pious')
-        game.attempt('smoke')
+        game.guess('pious')
+        game.guess('smoke')
 
         expect(game.outcome).to eq('Challenge in progress')
       end
@@ -148,7 +160,7 @@ RSpec.describe Wordle::Game do
 
     context 'when all 6 attempts fail' do
       it 'returns you lost message' do
-        6.times { game.attempt('wrong') }
+        6.times { game.guess('wrong') }
 
         expect(game.outcome).to eq('You lost! Target was: CRANE 😓')
       end
@@ -156,7 +168,7 @@ RSpec.describe Wordle::Game do
 
     context 'when target found' do
       it 'returns you win message' do
-        game.attempt(target)
+        game.guess(target)
 
         expect(game.outcome).to eq('You won in 1! 🎉')
       end

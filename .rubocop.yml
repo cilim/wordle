@@ -28,6 +28,9 @@ RSpec/MultipleExpectations:
 RSpec/NestedGroups:
   Max: 5
 
+RSpec/PredicateMatcher:
+  Enabled: false
+
 Style/MutableConstant:
   Enabled: false
 
