@@ -27,10 +27,6 @@ module Terminal
     COLOR_WHEEL.white.on_red.bold(value)
   end
 
-  def black_on_white(value)
-    COLOR_WHEEL.black.on_white(value)
-  end
-
   def white_on_black(value)
     COLOR_WHEEL.white.on_black(value)
   end

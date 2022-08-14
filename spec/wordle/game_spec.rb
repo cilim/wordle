@@ -183,10 +183,6 @@ RSpec.describe Wordle::Game do
     end
   end
 
-  def black_on_white(letter)
-    "\e[30;47m#{letter}\e[0m"
-  end
-
   def white_on_black(letter)
     "\e[37;40m#{letter}\e[0m"
   end

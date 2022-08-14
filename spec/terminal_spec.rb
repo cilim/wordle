@@ -29,12 +29,6 @@ RSpec.describe Terminal do
     end
   end
 
-  describe '#black_on_white' do
-    it 'wraps content in terminal color codes' do
-      expect(described_class.black_on_white('CONTENT')).to eq("\e[30;47mCONTENT\e[0m")
-    end
-  end
-
   describe '#white_on_black' do
     it 'wraps content in terminal color codes' do
       expect(described_class.white_on_black('CONTENT')).to eq("\e[37;40mCONTENT\e[0m")
