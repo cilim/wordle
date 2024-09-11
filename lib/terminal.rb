@@ -12,7 +12,7 @@ module Terminal
   end
 
   def clear
-    system('clear'); # rubocop:disable
+    system('clear')
   end
 
   def white_on_green(value)

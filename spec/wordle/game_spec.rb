@@ -42,7 +42,7 @@ RSpec.describe Wordle::Game do
       it 'returns true' do
         game = described_class.new(target)
 
-        expect(game.guess(target)).to eq true
+        expect(game.guess(target)).to be true
       end
     end
 
@@ -52,7 +52,7 @@ RSpec.describe Wordle::Game do
         wrong = 'pious'
 
         6.times do
-          expect(game.guess(wrong)).to eq false
+          expect(game.guess(wrong)).to be false
         end
 
         expect { game.guess(wrong) }.to raise_error(RuntimeError)

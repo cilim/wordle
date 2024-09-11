@@ -3,11 +3,11 @@ RSpec.describe Terminal do
     let(:content) { 'ignore_in_specs' }
 
     it 'outputs content to terminal' do
-      expect(described_class.put(content)).to eq(nil)
+      expect(described_class.put(content)).to be_nil
     end
 
     it 'outputs content to terminal without new line' do
-      expect(described_class.put(content, new_line: false)).to eq(nil)
+      expect(described_class.put(content, new_line: false)).to be_nil
     end
   end
 

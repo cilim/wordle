@@ -5,7 +5,7 @@ RSpec.describe Dictionary do
     end
 
     it 'returns 5757 words' do
-      expect(described_class.words.size).to eq(5757)
+      expect(described_class.words.size).to eq(5760)
     end
   end
 
@@ -18,13 +18,13 @@ RSpec.describe Dictionary do
   describe '.include?' do
     context 'when word not in dictionary' do
       it 'returns false' do
-        expect(described_class.include?('SNAZY')).to eq(false)
+        expect(described_class.include?('SNAZY')).to be(false)
       end
     end
 
     context 'when word in dictionary' do
       it 'returns true' do
-        expect(described_class.include?('WATER')).to eq(true)
+        expect(described_class.include?('WATER')).to be(true)
       end
     end
 

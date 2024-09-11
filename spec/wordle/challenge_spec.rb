@@ -64,7 +64,7 @@ RSpec.describe Wordle::Challenge do
       it 'returns true' do
         challenge.attempt(target)
 
-        expect(challenge.ended?).to eq true
+        expect(challenge.ended?).to be true
       end
     end
 
@@ -72,7 +72,7 @@ RSpec.describe Wordle::Challenge do
       it 'returns false' do
         challenge.attempt('smote')
 
-        expect(challenge.ended?).to eq false
+        expect(challenge.ended?).to be false
       end
     end
 
@@ -82,7 +82,7 @@ RSpec.describe Wordle::Challenge do
 
         challenge.attempt(target)
 
-        expect(challenge.ended?).to eq true
+        expect(challenge.ended?).to be true
       end
     end
 
@@ -90,7 +90,7 @@ RSpec.describe Wordle::Challenge do
       it 'returns true' do
         6.times { challenge.attempt('loose') }
 
-        expect(challenge.ended?).to eq true
+        expect(challenge.ended?).to be true
       end
     end
   end
@@ -206,7 +206,7 @@ RSpec.describe Wordle::Challenge do
   describe '#started?' do
     context 'when attempts empty' do
       it 'returns false' do
-        expect(challenge.started?).to eq(false)
+        expect(challenge.started?).to be(false)
       end
     end
 
@@ -214,7 +214,7 @@ RSpec.describe Wordle::Challenge do
       it 'returns true' do
         challenge.attempt('start')
 
-        expect(challenge.started?).to eq(true)
+        expect(challenge.started?).to be(true)
       end
     end
   end
@@ -262,7 +262,7 @@ RSpec.describe Wordle::Challenge do
 
     context 'when letter is upcased' do
       it 'returns if letter is in target' do
-        expect(challenge.target_contains?('K')).to eq(true)
+        expect(challenge.target_contains?('K')).to be(true)
       end
     end
   end
