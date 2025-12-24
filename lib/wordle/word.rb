@@ -3,7 +3,7 @@ module Wordle
     attr_accessor :target
 
     def initialize(word)
-      super(word).upcase!
+      super(word.upcase)
     end
 
     def hints
